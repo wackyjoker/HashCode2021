@@ -42,12 +42,10 @@ var fs = require("fs");
         var file_A;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, console.log("hello")];
-                case 1:
-                    _a.sent();
+                case 0:
                     file_A = "a_example";
                     return [4 /*yield*/, pizzaBot(file_A)];
-                case 2:
+                case 1:
                     _a.sent();
                     return [2 /*return*/];
             }
@@ -59,9 +57,17 @@ var fs = require("fs");
 function pizzaBot(file) {
     fs.readFile(file, "ASCII", function (err, data) {
         try {
-            console.log(data);
-            var trimStr = data.trim(); // make sure no space or /n at the end or the beginning.
-            var arr = trimStr.split(/\n/g); //split each line into arrays.
+            var trimStr = data.trim(); // make sure no space or /n at the end or the beginning. -- O(1)
+            var arr = trimStr.split(/\n/g); //split each line into arrays.  -- O(n)
+            var topList = arr.shift().trim().split(" "); // -- O(2n + 1)
+            var T4person = topList.pop(); //O(1)
+            var T3person = topList.pop(); //O(1)
+            var T2person = topList.pop(); //O(1)
+            var MpizzaNumber = topList.pop(); //O(1)                     //topList.shift();  O(n)
+            //  console.log(teams);
+            console.log(topList);
+            var pizzaMap = new Map();
+            console.log();
         }
         catch (err) {
             console.error(err);
