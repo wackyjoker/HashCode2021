@@ -1,36 +1,9 @@
 const fs = require("fs");
-
+const Road = require("./graph");
 class Cars{
     constructor(startAt,...roads) {
         this.startAt = startAt;
 
-    }
-}
-class Graph {
-    constructor() {
-        this.numberOfNodes = 0;
-        this.adjacentList = {};
-    }
-    addVertex(node)  {
-        this.adjacentList[node] = [];
-        this.numberOfNodes++;
-    }
-    addEdge(node1, node2) {
-        //uniderected Graph
-        this.adjacentList[node1].push(node2);
-        this.adjacentList[node2].push(node1);
-    }
-    showConnections() {
-        const allNodes = Object.keys(this.adjacentList);
-        for (let node of allNodes) {
-            let nodeConnections = this.adjacentList[node];
-            let connections = "";
-            let vertex;
-            for (vertex of nodeConnections) {
-                connections += vertex + " ";
-            }
-            console.log(node + "-->" + connections);
-        }
     }
 }
 
@@ -53,16 +26,19 @@ async function main(file){
         let dataList = trimStr.split(/\n/g); //split each line into arrays.
         let firstLine = dataList.shift().split(" "); // get the first line data from input array.
         let [time,intersections,streets,cars,scores] = firstLine;
-
-        const myGraph = new Graph();
+        const street = new Road();
         let carList = getCars(cars,dataList);
         console.log(carList);
-         console.log(dataList);
-
+        console.log(dataList);
+        for(vertex of dataList) {
+            let [start,end,name,time] = vertex.split(" ");
+            street.addVertex(name,start,end,time);
+        }
+        street.showConnections();
     });
-};
+}
 
 (async function(){
     const file_A = "in/a.txt";
-    main(file_A);
+    await main(file_A);
 })()
