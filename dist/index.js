@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,12 +54,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
-var fs = require("fs");
-var Team = /** @class */ (function () {
-    function Team(teams, teamMembers) {
+Object.defineProperty(exports, "__esModule", { value: true });
+var fs = __importStar(require("fs"));
+var Team = (function () {
+    function Team(teams, teamSize) {
         this._teams = teams;
-        this.teamMembers = teamMembers;
+        this._teamSize = teamSize;
     }
     Object.defineProperty(Team.prototype, "teams", {
         get: function () {
@@ -49,7 +68,30 @@ var Team = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(Team.prototype, "teamSize", {
+        get: function () {
+            return this._teamSize;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Team.prototype.givePizza = function () {
+        if (this._teams > 0) {
+            this._teams--;
+            console.log("we just gave a pizza");
+        }
+        else {
+            return false;
+        }
+    };
     return Team;
+}());
+var Delivery = (function () {
+    function Delivery() {
+    }
+    Delivery.prototype.deliver = function () {
+    };
+    return Delivery;
 }());
 (function () {
     return __awaiter(this, void 0, void 0, function () {
@@ -57,33 +99,52 @@ var Team = /** @class */ (function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    file_A = "a_example";
-                    return [4 /*yield*/, pizzaBot(file_A)];
+                    file_A = "in/a_example";
+                    return [4, pizzaBot(file_A)];
                 case 1:
                     _a.sent();
-                    return [2 /*return*/];
+                    return [2];
             }
         });
     });
 })();
-// const file_B = "b_little_bit_of_everything.in";
-// pizzaBot(file_B);
+function delivery(pizza, t4, t3, t2) {
+    while (pizza > 0) {
+        switch (pizza > 0) {
+            case pizza - t4.teamSize >= 2:
+                pizza = pizza - t4.teamSize;
+                console.log("t4 got a pizza , got " + pizza + "left");
+                t4.givePizza();
+                break;
+            case pizza - t3.teamSize >= 1:
+                pizza = pizza - t3.teamSize;
+                console.log("t3 got a pizza , got " + pizza + "left");
+                t3.givePizza();
+                break;
+            case pizza - t2.teamSize >= 0:
+                pizza = pizza - t2.teamSize;
+                console.log("t2 got a pizza , got +pizza +left");
+                t2.givePizza();
+                break;
+            default:
+                console.log("something went wrong");
+        }
+    }
+    return [pizza, t4.teams, t3.teams, t2.teams];
+}
 function pizzaBot(file) {
     fs.readFile(file, "ASCII", function (err, data) {
+        var _a;
         try {
-            var trimStr = data.trim(); // make sure no space or /n at the end or the beginning. -- O(1)
-            var arr = trimStr.split(/\n/g); //split each line into arrays.  -- O(n)
-            var topList = arr.shift().trim().split(" ").map(function (x) { return +parseInt(x, 10); }); // -- O(3n + 1)
-            var T4person = new Team(topList.pop(), 4); //O(1+1)
-            var T3person = new Team(topList.pop(), 3); //O(1)
-            var T2person = new Team(topList.pop(), 2); //O(1)
-            var Mpizzas = topList.pop(); //O(1)                     //topList.shift();  O(n)
-            //  console.log(teams);
-            if (Mpizzas - T4person.teamMembers >= 2) {
-            }
-            ;
-            var pizzaMap = new Map();
-            console.log();
+            var trimStr = data.trim();
+            var arr = trimStr.split(/\n/g);
+            var topList = (_a = arr.shift()) === null || _a === void 0 ? void 0 : _a.trim().split(" ").map(function (x) { return +parseInt(x, 10); });
+            var T4person = new Team(topList.pop(), 4);
+            var T3person = new Team(topList.pop(), 3);
+            var T2person = new Team(topList.pop(), 2);
+            var Mpizza = topList.pop();
+            var result = delivery(Mpizza, T4person, T3person, T2person);
+            console.log(result);
         }
         catch (err) {
             console.error(err);
