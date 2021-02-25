@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:watch": "tsc index.ts --outDir dist -w",
-    "build": "node dist/index.js"
+    "build:watch": "tsc LinkedList.ts -w",
+    "build": "node dist/index.js",
+    "check": "tsc -v"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^14.14.31"
+    "@types/node": "^14.14.31",
+    "typescript": "^4.2.2"
   }
 }

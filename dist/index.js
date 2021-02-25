@@ -37,6 +37,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var fs = require("fs");
+var Team = /** @class */ (function () {
+    function Team(teams, teamMembers) {
+        this._teams = teams;
+        this.teamMembers = teamMembers;
+    }
+    Object.defineProperty(Team.prototype, "teams", {
+        get: function () {
+            return this._teams;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return Team;
+}());
 (function () {
     return __awaiter(this, void 0, void 0, function () {
         var file_A;
@@ -59,13 +73,15 @@ function pizzaBot(file) {
         try {
             var trimStr = data.trim(); // make sure no space or /n at the end or the beginning. -- O(1)
             var arr = trimStr.split(/\n/g); //split each line into arrays.  -- O(n)
-            var topList = arr.shift().trim().split(" "); // -- O(2n + 1)
-            var T4person = topList.pop(); //O(1)
-            var T3person = topList.pop(); //O(1)
-            var T2person = topList.pop(); //O(1)
-            var MpizzaNumber = topList.pop(); //O(1)                     //topList.shift();  O(n)
+            var topList = arr.shift().trim().split(" ").map(function (x) { return +parseInt(x, 10); }); // -- O(3n + 1)
+            var T4person = new Team(topList.pop(), 4); //O(1+1)
+            var T3person = new Team(topList.pop(), 3); //O(1)
+            var T2person = new Team(topList.pop(), 2); //O(1)
+            var Mpizzas = topList.pop(); //O(1)                     //topList.shift();  O(n)
             //  console.log(teams);
-            console.log(topList);
+            if (Mpizzas - T4person.teamMembers >= 2) {
+            }
+            ;
             var pizzaMap = new Map();
             console.log();
         }
