@@ -1,5 +1,10 @@
+//@author : wacKY joker
+
 import * as fs from "fs";
 
+
+
+// team constructor for T=n teams
 class Team{
     private _teams:number;
     private _teamSize:number;
@@ -24,14 +29,7 @@ class Team{
 
 }
 
-class Delivery{
-    constructor(){
 
-    }
-    deliver(){
-
-    }
-}
 
 (async function(){
    // await console.log("hello");
@@ -42,6 +40,7 @@ class Delivery{
 // const file_B = "b_little_bit_of_everything.in";
 // pizzaBot(file_B);
 
+//delivery function to deliver pizza
 function delivery(pizza:number,t4:Team,t3:Team,t2:Team){
 
     while(pizza>0) {
@@ -68,7 +67,7 @@ function delivery(pizza:number,t4:Team,t3:Team,t2:Team){
     return [pizza,t4.teams,t3.teams,t2.teams];
 }
 
-
+// our main function to output everything
 function pizzaBot(file:string) {
 
     fs.readFile(file, "ASCII", function (err, data:string) {
@@ -76,17 +75,16 @@ function pizzaBot(file:string) {
             let trimStr = data.trim(); // make sure no space or /n at the end or the beginning. -- O(1)
             let arr:string[] = trimStr.split(/\n/g); //split each line into arrays.  -- O(n)
             const topList:number[]|undefined = arr.shift()?.trim().split(" ").map(x=>+parseInt(x,10)); // -- O(3n + 1)
-            let T4person = new Team(topList!.pop()!,4);  //O(1+1)
+            let T4person = new Team(topList!.pop()!,4);  //O(1)
             let T3person = new Team(topList!.pop()!,3);  //O(1)
             let T2person = new Team(topList!.pop()!,2);  //O(1)
-            let Mpizza:number = topList!.pop()!;        //O(1)                     //topList.shift();  O(n)
+            let Mpizza:number = topList!.pop()!;        //O(1)
           //  console.log(teams);
           const  result = delivery(Mpizza,T4person,T3person,T2person);
             console.log(result);
         } catch (err) {
             console.error(err);
         }
-
     });
 }
 
